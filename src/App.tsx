@@ -1,29 +1,25 @@
-import logo from './logo.svg'
-import chad from './assets/chad.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import LoginPage from './features/Auth/pages/LoginPage';
+import DogSearchPage from './features/Dogs/pages/DogSearchPage';
+import ProtectedRoute from './shared/components/ProtectedRoute';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-          <img src={logo} className="App-logo" alt="logo" />
-          <img src={chad} className="App-logo" alt="chad" />
-        </div>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  )
+    <Router>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/search"
+          element={
+            <ProtectedRoute>
+              <DogSearchPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/" element={<Navigate to="/search" replace />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
